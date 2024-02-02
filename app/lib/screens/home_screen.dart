@@ -1,43 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/post_bloc.dart';
-import '../models/post_model.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<PostBloc>(
+            create: (context) => PostBloc(),
+          ),
+          // Agrega más providers según sea necesario
+        ],
+        child: MyHomePage(),
+      ),
+    );
+  }
+}
 
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My App'),
+        title: Text('Flutter BLoC Example'),
       ),
       body: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {
-          // Verifica si las publicaciones están cargadas
-          if (state.posts.isEmpty) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            // Muestra la lista de publicaciones
-            return ListView.builder(
-              itemCount: state.posts.length,
-              itemBuilder: (context, index) {
-                final post = state.posts[index];
-                return ListTile(
-                  title: Text(post.username),
-                  subtitle: Text(post.caption),
-                  // Otros detalles del post...
-                );
-              },
-            );
-          }
+          // Ahora puedes acceder al PostBloc desde este contexto
+          return Center(
+            child: Text('Número de publicaciones: ${state.posts.length}'),
+          );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Agrega aquí la lógica para agregar nuevas publicaciones si es necesario
-        },
-        child: Icon(Icons.add),
       ),
     );
   }

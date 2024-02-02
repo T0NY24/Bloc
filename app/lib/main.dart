@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/post_bloc.dart'; // Importa tu archivo post_bloc.dart
+import 'bloc/post_bloc.dart';
 
 void main() {
   runApp(MyApp());
